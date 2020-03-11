@@ -1,0 +1,39 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+using namespace std;
+int result = 1000000;
+void prob_solve(int N,int cnt){
+	if(N == 1)
+		result = min(result,cnt);
+	else{
+		if(cnt<result){
+			if(N==3 || N%3 == 0){
+				N /=3;
+				cnt++;
+				prob_solve(N,cnt);
+				N *=3;
+				cnt--;
+			}
+			if(N==2 || N%2 == 0){
+				N /=2;
+				cnt++;
+				prob_solve(N,cnt);
+				N*=2;
+			cnt--;
+			}
+			N--;
+			cnt++;
+			prob_solve(N,cnt);
+		}
+	}
+}
+int main(void){
+	cin.tie(NULL);
+	ios::sync_with_stdio(false);
+	int N;
+	cin>>N;
+	int cnt=0;
+	prob_solve(N,cnt);
+	cout<<result<<"\n";
+}
