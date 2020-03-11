@@ -1,0 +1,11 @@
+#include <stdio.h>
+
+int main(void)
+{
+	int A, B, C;
+	int res1=0, res2=0, res3=0, res4=0;
+	scanf("%d %d %d", &A, &B, &C);
+	res1=(A+B)%C, res2= (A%C + B%C)%C, res3= (A*B)%C, res4= (A%C * B%C)%C;
+	printf("%d\n%d\n%d\n%d\n", res1, res2, res3, res4);
+	return 0;
+}
