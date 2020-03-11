@@ -1,0 +1,25 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+
+int main(void){
+	int x,y,max,min;
+	int gcd, mcd;
+	cin>>x>>y;
+	if(x>y)
+		max=x, min=y;
+	else
+		max=y, min=x;
+	for(int i = 1; i <= min;i++){
+		if((x % i == 0) &(y%i == 0))
+			gcd = i;
+	}
+	for(int i = 1; ;i++){
+		if((i%x == 0) & (i%y == 0)){
+			mcd = i;
+			break;
+		}
+	}
+	cout<<gcd<<"\n"<<mcd;
+}
