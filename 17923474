@@ -1,0 +1,64 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <math.h>
+using namespace std;
+void gold(int n,long so[], int num);
+int main(void){
+	cin.tie(NULL);
+	int *n;
+	n = new int[100000];
+	long so[80000];
+	int num = 0; // 소수의 총 개수(9591)
+	int temp = 0;
+	do{
+		cin>>n[temp];
+		temp++;
+	}while(n[temp-1]!=0);
+	for(int j=3;j<=1000000;j++){
+		int i = 2;
+		bool it = 1;
+		for(i;i<=sqrt(j);i++){
+			if(j%i == 0){
+				it=0;
+				break;
+			}
+		}
+		if(it){
+			so[num]=j;
+			num++;
+		}
+	}
+	for(int i =0;i<temp-1;i++){
+		gold(n[i],so,num);
+	}
+	delete[] n;
+}
+void gold(int n, long so[],int num){
+	int maximum;
+	long a,p ;
+	int real = 1;
+	for(int i = 0;i<num;i++){
+		if(n<so[i]){
+			maximum = i;
+			break;
+		}
+	}
+	for(int i=0;i<maximum;i++){
+		p = n-so[i];
+		real = 1;
+		for(int j=3;j<=sqrt(p);j++){
+			if(p%j == 0){
+				real = 0;
+				break;
+			}
+		}
+		if(real)
+			break;
+	}
+	if(real)
+		cout<<n<<" = "<<n-p<<" + "<<p<<"\n";
+	else
+		cout<<"Goldbach's conjecture is wrong."<<endl;
+}
+
