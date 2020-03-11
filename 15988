@@ -1,0 +1,19 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+using namespace std;
+int main(void){
+	cin.tie(NULL);
+	ios::sync_with_stdio(false);
+	long N;
+	cin>>N;
+	long num[N];
+	for(long i=0;i<N;i++)
+		cin>>num[i];
+	long dp[1000000];
+	dp[1] = 1, dp[2] = 2,dp[3] = 4;
+	for(long i=4;i<=1000000;i++)
+		dp[i] = (dp[i-1] + dp[i-2] + dp[i-3])%1000000009;
+	for(long i=0;i<N;i++)
+		cout<<dp[num[i]]<<"\n";
+}
