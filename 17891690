@@ -1,0 +1,42 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+
+int main(void){
+	int n;
+	cin>>n; // 메인이 되는 수들
+	int x[n][100];
+	int m[n]; // 각 열의 항의 갯수
+	for(int i = 0;i<n;i++){
+		cin>>m[i];
+		for(int j = 0;j<m[i];j++){
+			cin>>x[i][j];
+		}
+	}
+	int gcd[n][6000];
+	for(int k=0;k<n;k++){
+		int temp = 0;
+			for(int i=0;i<m[k]-1;i++){
+			for(int j=i+1;j<m[k];j++){
+				int min = x[k][i]>=x[k][j]?x[k][j]:x[k][i];
+				for(int l = min ; l>=1;l--){
+					if((x[k][i] % l ==0) & (x[k][j] % l ==0)){
+						gcd[k][temp] = l;
+						break;
+					}
+				}
+				temp += 1;
+			}	
+		 }	
+	}
+	for(int i =0;i<n;i++){
+		int j = 0;
+		long long result=0;
+		while(gcd[i][j] != NULL){
+			result += gcd[i][j];
+			j++;
+		}
+		cout<<result<<endl;
+	}
+}
