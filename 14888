@@ -1,0 +1,30 @@
+#include <iostream>
+#include <algorithm>
+#include <climits>
+using namespace std;
+int n, maxres=-1000000001, minres=1000000001;
+int arr[12];
+int oper[4];
+void DFS(int plus, int minus, int multiply, int divide, int count, int sum){
+	if(count == n){
+		maxres = max(maxres,sum);
+		minres = min(minres, sum);
+	}
+	if(plus>0)
+		DFS(plus-1,minus,multiply,divide,count+1,sum+arr[count]);
+	if(minus>0)
+		DFS(plus,minus-1,multiply,divide,count+1,sum-arr[count]);
+	if(multiply>0)
+		DFS(plus,minus,multiply-1,divide,count+1,sum*arr[count]);
+	if(divide>0)
+		DFS(plus,minus,multiply,divide-1,count+1,sum/arr[count]);
+}
+int main(void){
+	cin>>n;
+	for(int i=0;i<n;i++)
+		cin>>arr[i];
+	for(int i=0;i<4;i++)
+		cin>>oper[i];
+	DFS(oper[0],oper[1],oper[2],oper[3],1,arr[0]);
+	cout<<maxres<<"\n"<<minres<<endl;
+}
