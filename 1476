@@ -1,0 +1,21 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main(void){
+	int earth, sun, moon,year=1;
+	cin>>earth>>sun>>moon;
+	while((earth!=1) || (sun!=1) || (moon!=1)){
+		earth-=1;
+		sun-=1;
+		moon-=1;
+		if(earth==0)
+			earth=15;
+		if(sun==0)
+			sun=28;
+		if(moon==0)
+			moon=19;
+		year++;
+	}
+	cout<<year<<endl;
+}
