@@ -1,0 +1,38 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int func(int num);
+int fac(int n);
+int main(void){
+	int n,num=0;;
+	cin>>n;
+	int arr[n];
+	for(int i=0;i<n;i++)
+		cin>>arr[i];
+	for(int i=0;i<n;i++){
+		num = func(arr[i]);
+		cout<<num<<endl;
+	}
+}
+
+int func(int num){
+	int result = 0;
+	int div_3,div_2,div_1;
+	div_3 = num/3;
+	for(int i=0;i<=div_3;i++){
+		int remain1 = num - i*3;
+		div_2 = remain1 / 2;
+		for(int j=0;j<=div_2;j++){
+			div_1 = remain1 - j*2;
+			int n= fac(div_1+j+i) / (fac(div_1)*fac(j)*fac(i));
+			result += n;
+		}
+	}
+	return result;
+}
+
+int fac(int n){
+	if(n==1 || n == 0)
+		return 1;
+	return n*fac(n-1);
+}
