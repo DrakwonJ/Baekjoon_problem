@@ -1,0 +1,32 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+using namespace std;
+int N,M,num_arr[9],res_arr[9],visited[9];
+void DFS(int cnt){
+	if(cnt == M){
+		for(int i=0;i<M;i++)
+			cout<<res_arr[i]<<" ";
+		cout<<"\n";
+		return;
+	}
+	for(int i=0;i<N;i++){
+		if(!visited[i]){
+			for(int j=0;j<=i;j++)
+				visited[j] = 1;
+			res_arr[cnt] = num_arr[i];
+			DFS(cnt+1);
+			for(int j=0;j<=i;j++)
+				visited[j] = 0;
+		}
+	}
+}
+int main(void){
+	cin.tie(NULL);
+	ios::sync_with_stdio(false);
+	cin>>N>>M;
+	for(int i=0;i<N;i++)
+		cin>>num_arr[i];
+	sort(num_arr,num_arr+N);
+	DFS(0);
+}
