@@ -1,0 +1,98 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+using namespace std;
+int N,num,last=0;
+int S[20];
+string order;
+
+void Add(int num){
+	int real=1;
+	for(int i=0;i<last;i++){
+		if(S[i] == num){
+			real=0;
+			break;
+		}
+	}
+	if(real){
+		S[last] = num;
+		last++;
+	}
+}
+
+void Remove(int num){
+	for(int i=0;i<last;i++){
+		if(S[i] == num){
+			S[i] = 0;
+			for(int j=i;j<last;j++)
+				S[j] = S[j+1];
+			last--;
+		}
+	}
+}
+
+void Check(int num){
+	int real=0;
+	for(int i=0;i<last;i++){
+		if(S[i] == num){
+			real=1;
+			break;
+		}
+	}
+	cout<<real<<"\n";
+}
+
+void Toggle(int num){
+	int real=0,idx=0;
+	for(int i=0;i<last;i++){
+		if(S[i] == num){
+			real = 1;
+			idx=i;
+			break;
+		}
+	}
+	if(real)
+		Remove(num);
+	else
+		Add(num);
+}
+
+void All(){
+	for(int i=0;i<20;i++)
+		S[i] = i+1;
+	last = 20;
+}
+
+void Empty(){
+	for(int i=0;i<20;i++)
+		S[i]=0;
+	last = 0;
+}
+int main(void){
+	cin.tie(NULL);
+	ios::sync_with_stdio(false);
+	cin>>N;
+	for(int i=0;i<N;i++){
+		cin>>order;
+		if(order == "add"){
+			cin>>num;
+			Add(num);
+		}
+		else if(order == "check"){
+			cin>>num;
+			Check(num);
+		}
+		else if(order == "remove"){
+			cin>>num;
+			Remove(num);
+		}
+		else if(order == "toggle"){
+			cin>>num;
+			Toggle(num);
+		}
+		else if(order == "all")
+			All();
+		else
+			Empty();
+	}
+}
