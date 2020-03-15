@@ -1,0 +1,26 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+using namespace std;
+int main(void){
+	cin.tie(NULL);
+	ios::sync_with_stdio(false);
+	long mod = 1000000000;
+	long N,K;
+	cin>>N>>K;
+	long dp[K+1][N+1] = {1};
+	dp[1][1] = 1;
+	for(int i=0;i<=N;i++)
+		dp[1][i] = 1;
+	for(int i=2;i<=K;i++){ // 항의 갯수 i
+		for(int j=0;j<=N;j++){
+			long sum  =0;
+			for(int k = 0;k<=j;k++){
+				sum += dp[i-1][k];
+				sum %= mod;
+			}
+			dp[i][j] = sum % mod;
+		}
+	}
+	cout<<dp[K][N]<<"\n";
+}
