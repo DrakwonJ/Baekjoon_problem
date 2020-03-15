@@ -1,0 +1,28 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+using namespace std;
+int main(void){
+	cin.tie(NULL);
+	ios::sync_with_stdio(false);
+	int N;
+	cin>>N;
+	int dp[1000001] = {0};
+	dp[1] = 1;
+	int sq = 1;
+	for(int i=2;i<=N;i++){
+		if(i == (sq+1)*(sq+1)){
+			dp[i] = 1;
+			sq++;
+		}
+		else{
+			int temp=100000;
+			for(int j=1;j<=sq;j++){
+				int temp1 = dp[i-j*j] + 1;
+				temp = min(temp,temp1);
+			}
+			dp[i] = temp;
+		}
+	}
+	cout<<dp[N]<<endl;
+}
