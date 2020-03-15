@@ -1,0 +1,29 @@
+#include <iostream>
+#include <stack>
+#include <stdio.h>
+using namespace std;
+int main(void){
+	stack<char>st;
+	int N,num;
+	cin>>N;
+	string s;
+	cin.ignore(256,'\n');
+	for(int i=0;i<N;i++){
+		getline(cin,s);
+		s = s+" ";
+		for(int j=0;j<s.length();j++){
+			if(s.at(j) == ' '){
+				while(!st.empty()){
+					char ch = st.top();
+					cout<<ch;
+					st.pop();
+				}
+				cout<<" ";
+			}
+			else{
+				st.push(s.at(j));
+			}
+		}
+		cout<<"\n";
+	}
+}
