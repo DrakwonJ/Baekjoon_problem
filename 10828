@@ -1,0 +1,50 @@
+#include <iostream>
+#include <stack>
+#include <stdio.h>
+using namespace std;
+int main(void){
+	stack<int>st;
+	int N,num;
+	cin>>N;
+	string s;
+	for(int i=0;i<N;i++){
+		cin>>s;
+		if(s=="push"){
+			cin>>num;
+			st.push(num);
+		}
+		else if(s=="top"){
+			if(!st.empty()){
+				int temp = st.top();
+				cout<<temp<<"\n";
+			}
+			else{
+				cout<<-1<<"\n";
+			}
+		}
+		else if(s=="size"){
+			if(!st.empty()){
+				int temp = st.size();
+				cout<<temp<<"\n";
+			}
+			else{
+				cout<<0<<"\n";
+			}
+		}
+		else if(s == "empty"){
+			bool temp = st.empty();
+			cout<<int(temp)<<"\n";
+		}
+		else if(s == "pop"){
+			if(!st.empty()){
+				int temp = st.top();
+				st.pop();
+				cout<<temp<<"\n";
+			}
+			else
+				cout<<-1<<"\n";
+		}
+		else
+			continue;
+	}
+}
