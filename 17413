@@ -1,0 +1,56 @@
+#include <iostream>
+#include <stack>
+#include <queue>
+#include <stdio.h>
+using namespace std;
+int main(void){
+	stack <char> Stack;
+	queue <char> Queue;
+	string s;
+	getline(cin,s);
+	int N = s.length();
+	int i=0;
+	while(i<N){
+		if(s[i] == '<'){
+			if(!Stack.empty()){
+				while(!Stack.empty()){
+					char temp = Stack.top();
+					cout<<temp;
+					Stack.pop();
+				}
+			}
+			Queue.push(s[i]);
+			i++;
+			do{
+				Queue.push(s[i]);
+				i++;
+			}while(Queue.back() != '>');
+			while(!Queue.empty()){
+				char ch = Queue.front();
+				Queue.pop();
+				cout<<ch;
+			}
+		}
+		else if(s[i] == ' '){
+			if(!Stack.empty()){
+				while(!Stack.empty()){
+					char temp = Stack.top();
+					cout<<temp;
+					Stack.pop();
+				}
+			}
+			cout<<" ";
+			i++;
+		}
+		else{
+			char temp = s[i];
+			Stack.push(temp);
+			i++;
+		}
+	}
+	while(!Stack.empty()){
+		char temp = Stack.top();
+		cout<<temp;
+		Stack.pop();
+	}
+}
