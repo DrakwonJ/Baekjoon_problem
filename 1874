@@ -1,0 +1,44 @@
+#include <iostream>
+#include <stack>
+#include <stdio.h>
+using namespace std;
+int main(void){
+	stack<int>ans;
+	int N;
+	cin>>N;
+	int arr[N];
+	for(int i=0;i<N;i++)
+		cin>>arr[i];
+	char res[2*N];
+	int res_num=1,num=2,arrnum=0;
+	res[0] = '+';
+	ans.push(1);
+	while(res_num < 2*N){
+		if(ans.empty()){
+			ans.push(num);
+			num++;
+			res[res_num] = '+';
+			res_num++;
+		}
+		else if(ans.top()<arr[arrnum]){
+			ans.push(num);
+			num++;
+			res[res_num] = '+';
+			res_num++;
+		}
+		else if(ans.top() == arr[arrnum]){
+			ans.pop();
+			arrnum++;
+			res[res_num] = '-';
+			res_num++;
+		}
+		else{
+			cout<<"NO";
+			break;
+		}
+	}
+	if(res_num == 2*N){
+		for(int i=0;i<2*N;i++)
+			cout<<res[i]<<"\n";
+	}
+}
