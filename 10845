@@ -1,0 +1,53 @@
+#include <iostream>
+#include <queue>
+#include <stdio.h>
+using namespace std;
+int main(void){
+	queue<int> Q;
+	int N;
+	cin>>N;
+	for(int i=0;i<N;i++){
+		string s;
+		cin>>s;
+		int num;
+		if(s=="push"){
+			cin>>num;
+			Q.push(num);
+		}
+		else if(s=="pop"){
+			if(Q.empty())
+				cout<<-1<<"\n";
+			else{
+				num=Q.front();
+				cout<<num<<"\n";
+				Q.pop();
+			}
+		}
+		else if(s=="size"){
+			num=Q.size();
+			cout<<num<<"\n";
+		}
+		else if(s=="empty"){
+			if(Q.empty())
+				cout<<"1"<<"\n";
+			else
+				cout<<"0"<<"\n";
+		}
+		else if(s=="front"){
+			if(Q.empty())
+				cout<<"-1"<<"\n";
+			else{
+				num=Q.front();
+				cout<<num<<"\n";
+			}
+		}
+		else{
+			if(Q.empty())
+				cout<<-1<<"\n";
+			else{
+				num=Q.back();
+				cout<<num<<"\n";
+			}
+		}
+	}
+}
