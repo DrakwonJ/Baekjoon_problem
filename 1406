@@ -1,0 +1,42 @@
+#include <iostream>
+#include <list>
+#include <stdio.h>
+using namespace std;
+int main(void){
+	list<char>writer;
+	string str;
+	cin>>str;
+	int len = str.length();
+	for(int i=0;i<len;i++)
+		writer.push_back(str[i]);
+	int N;
+	cin>>N;
+	auto iterpos = writer.end();
+	for(int i =0;i<N;i++){
+		char ch;
+		cin>>ch;
+		if(ch == 'L'){
+			if(iterpos != writer.begin())
+				iterpos--;
+		}
+		if(ch == 'D'){
+			if(iterpos != writer.end())
+				iterpos++;
+		}
+		if(ch == 'B'){
+			if(iterpos != writer.begin()){
+				iterpos--;
+				iterpos = writer.erase(iterpos);
+			}
+		}
+		if(ch == 'P'){
+			char ch1;
+			cin>>ch1;
+			writer.insert(iterpos,ch1);
+		}
+	}
+	while(!writer.empty()){
+		cout<<writer.front();
+		writer.pop_front();
+	}
+}
