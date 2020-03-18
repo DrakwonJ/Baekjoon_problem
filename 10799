@@ -1,0 +1,31 @@
+#include <iostream>
+#include <stack>
+#include <stdio.h>
+using namespace std;
+int main(void){
+	stack <char> Stack;
+	string str;
+	cin>>str;
+	int N = str.length();
+	char before;
+	int result = 0;
+	for(int i=0;i<N;i++){
+		if(str[i] == '('){
+			Stack.push(str[i]);
+			before = '(';
+		}
+		if(str[i] == ')'){
+			if(before == '('){
+				Stack.pop();
+				result += Stack.size();
+				before = ')';
+			}
+			else{
+				result ++;
+				Stack.pop();
+				before = ')';
+			}
+		}
+	}
+	cout<<result;
+}
