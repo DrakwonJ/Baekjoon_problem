@@ -1,0 +1,28 @@
+#include <iostream>
+#include <stack>
+#include <stdio.h>
+using namespace std;
+int main(void){
+	stack <int> st;
+	int N;
+	cin>>N;
+	int arr[N+1];
+	int cnt[N+1] = {0};
+	int ans[N+1];
+	for(int i=1;i<=N;i++){
+		cin>>arr[i];
+		cnt[arr[i]]++;
+	}
+	cnt[0] = 1000001;
+	for(int i = N;i>0;i--){
+		while(!st.empty() && cnt[arr[i]] >= cnt[st.top()])
+			st.pop();
+		if(st.empty())
+			ans[i] = -1;
+		else
+			ans[i] = st.top();
+		st.push(arr[i]);
+	}
+	for(int i=1;i<=N;i++)
+		cout<<ans[i]<<" ";
+}
