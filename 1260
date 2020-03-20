@@ -1,0 +1,64 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <queue>
+#include <stdio.h>
+#include <cstring>
+using namespace std;
+int N,M,V;
+vector<int> arr[1001];
+queue<int> seq;
+bool visited[1001] = {0};
+
+void DFS(int V){
+	visited[V] = true;
+	seq.push(V);
+	for(int i=0;i<arr[V].size();i++){
+		int next = arr[V][i];
+		if(visited[next] == 0)
+			DFS(next);
+	}
+}
+
+void BFS(int V){
+	queue<int> temp;
+	visited[V] = true;
+	temp.push(V);
+	while(!temp.empty()){
+		int next = temp.front();
+		temp.pop();
+		seq.push(next);
+		for(int i=0;i<arr[next].size();i++){
+			if(visited[arr[next][i]] == 0){
+				visited[arr[next][i]] = 1;
+				temp.push(arr[next][i]);
+			}
+		}
+	}
+}
+int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	cin>>N>>M>>V;
+	for(int i=0;i<M;i++){
+		int temp1,temp2;
+		cin>>temp1>>temp2;
+		arr[temp1].push_back(temp2);
+		arr[temp2].push_back(temp1);
+	}
+	for(int i=0;i<N;i++){
+		sort(arr[i].begin(),arr[i].end());
+	}
+	DFS(V);
+	while(!seq.empty()){
+		cout<<seq.front()<<" ";
+		seq.pop();
+	}
+	memset(visited,0,sizeof(visited));
+	cout<<"\n";
+	BFS(V);
+	while(!seq.empty()){
+		cout<<seq.front()<<" ";
+		seq.pop();
+	}
+}
