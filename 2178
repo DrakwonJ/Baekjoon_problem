@@ -1,0 +1,35 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+#include <cstring>
+using namespace std;
+int width,height;
+int ans = 10000;
+string arr[100];
+int counted[100][100] = {0, };
+void travel(int count, int h, int w){
+	if(counted[h][w] == 0)
+		counted[h][w] = count;
+	else if(count < counted[h][w])
+		counted[h][w] = count;
+	else
+		return;
+	if(h-1 >= 0 && arr[h-1][w] == '1')
+		travel(count+1,h-1,w);
+	if(h+1 < height && arr[h+1][w] == '1')
+		travel(count+1,h+1,w);
+	if( w-1 >= 0 &&arr[h][w-1] == '1')
+		travel(count+1, h,w-1);
+	if( w+1 < width && arr[h][w+1] == '1')
+		travel(count+1, h,w+1);
+}
+int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	cin>>height>>width;
+	for(int i=0;i<height;i++){
+		cin>>arr[i];
+	}
+	travel(1,0,0);
+	cout<<counted[height-1][width-1];
+}
