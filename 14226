@@ -1,0 +1,50 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+#include <cstring>
+#include <queue>
+using namespace std;
+typedef struct{
+	int display;
+	int clip;
+	int cnt;
+}emoticon;
+
+int arr[10001];
+int visited[10001][10001] = {0, };
+int timee = 0;
+queue <emoticon> emotion;
+
+void project(){
+	while(emotion.front().cnt+1 == timee){
+		if(visited[emotion.front().display][emotion.front().clip] == 1){
+			emotion.pop();
+		}
+		else{
+			visited[emotion.front().display][emotion.front().clip] = 1;
+			if(arr[emotion.front().display] > emotion.front().cnt)
+				arr[emotion.front().display] = emotion.front().cnt;
+			if(emotion.front().display != 1)
+				emotion.push({emotion.front().display-1,emotion.front().clip,timee});
+			if(emotion.front().clip != 0)
+				emotion.push({emotion.front().display+emotion.front().clip, emotion.front().clip, timee});
+			if(emotion.front().display != emotion.front().clip)
+				emotion.push({emotion.front().display,emotion.front().display,timee});
+			emotion.pop();
+		}
+	}
+}
+int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	int S;
+	cin>>S;
+	for(int i=0;i<1001;i++)
+		arr[i] = 1000;
+	emotion.push({1,0,0});
+	while(arr[S] == 1000){
+		timee++;
+		project();
+	}
+	cout<<arr[S]<<endl;
+}
