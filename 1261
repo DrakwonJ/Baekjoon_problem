@@ -1,0 +1,62 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+#include <cstring>
+#include <queue>
+using namespace std;
+int N,M;
+string block[1001];
+int visited[1001][1001]; // y,x
+void wall(int x, int y, int bre){
+	if(y == M-1 && x == N-1){
+		if(visited[y][x] > bre)
+			visited[y][x] = bre;
+		return;
+	}
+	if(visited[y][x] <= bre)
+		return;
+	else{
+		visited[y][x] = bre;
+		if(y<= M){
+			if(block[y+1][x] == '0')
+				wall(x,y+1,bre);
+			else
+				wall(x,y+1,bre+1);
+		}
+		if(x<= N){
+			if(block[y][x+1] == '0')
+				wall(x+1,y,bre);
+			else
+				wall(x+1,y,bre+1);
+		}
+		if(y>=1){
+			if(block[y-1][x] == '0')
+				wall(x,y-1,bre);
+			else
+				wall(x,y-1,bre+1);
+		}
+		if(x>=1){
+			if(block[y][x-1] == '0')
+				wall(x-1,y,bre);
+			else
+				wall(x-1,y,bre+1);
+		}
+	}
+}
+int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	cin>>N>>M; // M이 y N이 x
+	for(int i=0;i<M;i++){
+		cin>>block[i];
+	}
+	for(int i=0;i<101;i++){
+		for(int j=0;j<101;j++)
+			visited[i][j] = 1000;
+	}
+	int bre = 0;
+	int x=0,y=0;
+	wall(x,y,bre);
+	int ans = visited[M-1][N-1];
+	cout<<ans<<endl;
+}
