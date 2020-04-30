@@ -1,0 +1,82 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+#include <cstring>
+#include <queue>
+using namespace std;
+typedef struct{
+	int x;
+	int y;
+}dir;
+dir movedir[4] = {{1,0},{-1,0},{0,1},{0,-1}};
+int R,C;
+pair<int,int>start, destination;
+string Map[50];
+int visited[50][50] = {0, };
+queue<pair<int,int>>water;
+int escape(){
+	queue<pair<int,int>>mole;
+	mole.push(start);
+	visited[start.first][start.second]=1;
+	while(!mole.empty()){
+		int curwater = water.size();
+		for(int j=0;j<curwater;j++){
+			int curY = water.front().first;
+			int curX = water.front().second;
+			water.pop();
+			for(int k=0;k<4;k++){
+				int nextY = curY + movedir[k].y;
+				int nextX = curX + movedir[k].x;
+				if(0<=nextX && 0<= nextY && nextX<C && nextY<R)
+				{
+					if(Map[nextY][nextX]=='.'){
+						Map[nextY][nextX]='*';
+						water.push(make_pair(nextY,nextX));
+					}
+				}
+			}
+		}
+		int cursize = mole.size();
+		for(int i=0;i<cursize;i++){
+			int y = mole.front().first;
+			int x = mole.front().second;
+			mole.pop();
+			if(y==destination.first && x==destination.second)
+				return visited[y][x] - 1;
+			for(int j=0;j<4;j++){
+				int nextY = y+movedir[j].y;
+				int nextX = x+movedir[j].x;
+				if(0<=nextY && 0<=nextX && nextY<R &&nextX<C){
+					if(Map[nextY][nextX] != '*' && Map[nextY][nextX]!='X' && visited[nextY][nextX]==0){
+						visited[nextY][nextX] = visited[y][x]+1;
+						mole.push(make_pair(nextY,nextX));
+					}
+				}
+			}
+		}
+	}
+	return -1;
+}
+
+int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	cin>>R>>C; // R이 Y, C가 X
+	for(int i=0;i<R;i++)
+		cin>>Map[i];
+	for(int i=0;i<R;i++){
+		for(int j=0;j<C;j++){
+			if(Map[i][j] == 'D')
+				destination = make_pair(i,j);
+			if(Map[i][j] == 'S')
+				start = make_pair(i,j);
+			if(Map[i][j] == '*')
+				water.push(make_pair(i,j));
+		}
+	}
+	int result = escape();
+	if(result == -1)
+		cout<<"KAKTUS"<<endl;
+	else
+		cout<<result<<endl;
+}
