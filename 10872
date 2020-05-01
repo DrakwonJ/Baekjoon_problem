@@ -1,0 +1,27 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+#include <cstring>
+#include <queue>
+#include <math.h>
+using namespace std;
+long fac(int N){
+	if(N == 1)
+		return N;
+	else{
+		long ans = N*fac(N-1);
+		return ans;
+	}
+}
+int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	int N;
+	long ans;
+	cin>>N;
+	if(N == 0)
+		ans = 1;
+	else
+		ans = fac(N);
+	cout<<ans;
+}
