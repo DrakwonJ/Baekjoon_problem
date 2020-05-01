@@ -1,0 +1,29 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+#include <cstring>
+#include <queue>
+#include <math.h>
+using namespace std;
+int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	long long N,M,ntwo=0,mtwo=0,nmtwo=0,nfive=0,mfive=0,nmfive=0;
+	cin>>N>>M;
+	for(long long i=5;i<=N-M;i*=5)
+		nmfive += (N-M)/i;
+	for(long long i=5;i<=N;i*=5)
+		nfive += N/i;
+	for(long long i=5;i<=M;i*=5)
+		mfive += M/i;
+	for(long long i=2;i<=N-M;i*=2)
+		nmtwo += (N-M)/i;
+	for(long long i=2;i<=M;i*=2)
+		mtwo += M/i;
+	for(long long i=2;i<=N;i*=2)
+		ntwo += N/i;
+	long long twoans = ntwo - mtwo - nmtwo;
+	long long fiveans = nfive - mfive - nmfive;
+	long long ans = min(twoans, fiveans);
+	cout<<ans;
+}
