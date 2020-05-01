@@ -1,0 +1,36 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+#include <cstring>
+#include <queue>
+#include <math.h>
+using namespace std;
+int M,N;
+queue <long> ans;
+int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	cin>>M>>N;
+	int num=0;
+	if(N<=2 || M<=2)
+		ans.push(2);
+	for(int j=3;j<=N;j++){
+		int i = 2;
+		bool it = 1;
+		for(i;i<=sqrt(j);i++){
+			if(j%i == 0){
+				it=0;
+				break;
+			}
+		}
+		if(it){
+			if(j>=M && j<=N)
+				ans.push(j);
+		}
+	}
+	while(!ans.empty()){
+		int temp = ans.front();
+		ans.pop();
+		cout<<temp<<"\n";
+	}
+}
