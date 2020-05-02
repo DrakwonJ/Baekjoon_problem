@@ -1,0 +1,42 @@
+#include <iostream>
+#include <stdio.h>
+#include <cstring>
+#include <stack>
+using namespace std;
+string s;
+stack <int> be8;
+int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	cin>>s;
+	int cnt = 0;
+	int length = s.length()-1;
+	while(cnt != length+1){
+		int num=0;
+		char temp = s[length-cnt];
+		num = temp - '0';
+		for(int i=0;i<3;i++){
+			if(num==0)
+				be8.push(0);
+			else{
+				int t = num%2;
+				be8.push(t);
+				num = num/2;
+			}
+		}
+		cnt++;
+	}
+	int zero = 0;
+	while(!be8.empty()){
+		int temp = be8.top();
+		be8.pop();
+		if(temp == 1)
+			zero = 1;
+		if(temp == 0 && zero == 0)
+			continue;
+		else
+			cout<<temp;
+	}
+	if(s == "0")
+		cout<<0;
+}
