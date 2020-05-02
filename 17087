@@ -1,0 +1,38 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+#include <cstring>
+#include <queue>
+#include <math.h>
+using namespace std;
+long long gcd(long long num1, long long num2){
+	long long temp,n;
+	if(num1<num2){
+		temp = num1;
+		num1 = num2;
+		num2 = temp;
+	}
+	while(num2!=0){
+		n = num1%num2;
+		num1 = num2;
+		num2 = n;
+	}
+	return num1;
+}
+int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	long long N,S;
+	cin>>N>>S;
+	long long arr[N];
+	for(long long i=0;i<N;i++)
+		cin>>arr[i];
+	int cache = 0;
+	cache = abs(arr[0] - S);
+	for(int i=1;i<N;i++){
+		long long temp = gcd(cache, abs(arr[i-1] - arr[i]));
+		cache = temp;
+	}
+	cout<<cache;
+	
+}
