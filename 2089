@@ -1,0 +1,27 @@
+#include <iostream>
+#include <stdio.h>
+#include <cstring>
+#include <stack>
+using namespace std;
+long long N;
+void rebuild(long long N){
+	if(N==0)
+		return;
+	if(N % -2 == 0){
+		rebuild(N / -2);
+		cout<<"0";
+	}
+	else{
+		rebuild((N-1)/-2);
+		cout<<"1";
+	}
+	return;
+}
+int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	cin>>N;
+	if(N==0)
+		cout<<"0";
+	rebuild(N);
+}
