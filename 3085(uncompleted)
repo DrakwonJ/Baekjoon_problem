@@ -1,0 +1,183 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <math.h>
+using namespace std;
+int N, big=0;
+string map[52];
+void Swap(){
+	for(int i=0;i<N;i++){
+		for(int j=0;j<N;j++){
+			char first = map[i][j];
+			char side = map[i][j];
+			char down = map[i][j];
+			if(j+1<N)
+				side = map[i][j+1];
+			if(i+1<N)
+				down = map[i+1][j];
+			if(first != side){
+				int count = 1;
+				char next = '0';
+				int sta = 1;
+				//side up
+				if(i-1>=0)
+					next = map[i-1][j];
+				while(side == next){
+					count++;
+					if(i-count>=0)
+						next = map[i-count][j];
+					else
+						break;
+				}
+				//side down
+				if(i+1<N)
+					next = map[i+1][j];
+				while(side == next){
+					count++;
+					sta++;
+					if(i+sta<N)
+						next = map[i+sta][j];
+					else
+						break;
+				}
+				big = max(big,count);
+				count = 1, sta = 1;
+				next = '0';
+				//side left
+				if(j-1>=0)
+					next = map[i][j-1];
+				while(side == next){
+					count++;
+					if(j-count>=0)
+						next = map[i][j-count];
+					else
+						break;
+				}
+				big = max(big,count);
+				count = 1;
+				next = '0';
+				//first up
+				if(i-1>=0)
+					next = map[i-1][j+1];
+				while(first == next){
+					count++;
+					if(i-count>=0)
+						next = map[i-count][j+1];
+					else
+						break;
+				}
+				//first down
+				if(i+1<N)
+					next = map[i+1][j+1];
+				while(first == next){
+					count++;
+					sta++;
+					if(i+sta<N)
+						next = map[i+sta][j+1];
+					else
+						break;
+				}
+				big = max(big,count);
+				count = 1,sta = 1;
+				next = '0';
+				//first right
+				if(j+2<N)
+					next = map[i][j+2];
+				while(first == next){
+					count++;
+					if(j+count+1<N)
+						next = map[i][j+count+1];
+					else
+						break;
+				}
+				big = max(big,count);
+			}
+			if(first != down){
+				int count = 1;
+				int sta = 1;
+				char next = '0';
+				//down up
+				if(i-1>=0)
+					next = map[i-1][j];
+				while(down == next){
+					count++;
+					if(i-count>=0)
+						next = map[i-count][j];
+					else
+						break;
+				}
+				big = max(big,count);
+				count = 1;
+				next = '0';
+				//first down
+				if(i+2<N)
+					next = map[i+count+1][j];
+				while(first == next){
+					count++;
+					if(i+count+1<N)
+						next = map[i+count+1][j];
+					else
+						break;
+				}
+				big = max(big,count);
+				count = 1;
+				next = '0';
+				//down left
+				if(j-1>=0)
+					next = map[i][j-1];
+				while(down==next){
+					count++;
+					if(j-count>=0)
+						next = map[i][j-count];
+					else
+						break;
+				}
+				//down right
+				if(j+1<N)
+					next = map[i][j+1];
+				while(down==next){
+					count++;
+					sta++;
+					if(j+sta<N)
+						next = map[i][j+sta];
+					else
+						break;
+				}
+				big = max(big,count);
+				count = 1, sta =1;
+				next = '0';
+				//first left
+				if(j-1>=0)
+					next = map[i+1][j-1];
+				while(first==next){
+					count++;
+					if(j-count>=0)
+						next = map[i+1][j-count];
+					else
+						break;
+				}
+				//first right
+				if(j+1<N)
+					next = map[i+1][j+1];
+				while(first==next){
+					count++;
+					sta++;
+					if(j+sta<N)
+						next = map[i+1][j+sta];
+					else
+						break;
+				}
+				big = max(big,count);
+			}
+		}
+	}
+}
+int main(void){
+	cin.tie(NULL);
+	cin>>N;
+	for(int i=0;i<N;i++){
+		cin>>map[i];
+	}
+	Swap();
+	cout<<big<<endl;
+}
