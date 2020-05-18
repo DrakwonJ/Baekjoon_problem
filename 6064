@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+int T;
+int gcd (int a, int b){
+	while(b!=0){
+		int c = a%b;
+		a = b;
+		b = c;
+	}
+	return a;
+}
+void getyear(int M, int N, int x, int y){
+	int lcm = M*N/gcd(M,N);
+	int temp = x;
+	while(temp <= lcm){
+		if(temp%N == y || (temp%N == 0 && N == y))
+			break;
+		temp+=M;
+	}
+	if(temp > lcm)
+		cout<<-1<<"\n";
+	else
+		cout<<temp<<"\n";
+}
+int main(void){
+	cin.tie(NULL);
+	cin>>T;
+	for(int i=0;i<T;i++){
+		int a,b,c,d;
+		cin>>a>>b>>c>>d;
+		getyear(a,b,c,d);
+	}
+}
