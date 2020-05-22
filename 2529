@@ -1,0 +1,91 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <stack>
+#include <math.h>
+using namespace std;
+int N;
+long long k = 0;
+long long Max = 0;
+long long Min = 9999999999;
+char inequality[9];
+void dfs(int number[10], int cnt, stack <int> ans){
+	long long result = 0;
+	if(cnt==N){
+		k++;
+		for(int i=0;i<=N;i++){
+			int temp = ans.top();
+			ans.pop();
+			if(i==0)
+				result+=temp;
+			else
+				result+= temp * pow(10,i);
+		}
+		Max = max(result,Max);
+		Min = min(result,Min);
+		return;
+	}
+	else{
+		if(inequality[cnt] == '<'){
+			int temp = ans.top();
+			for(int i=0;i<10;i++){
+				if(number[i] == 0){
+					if(temp < i){
+						ans.push(i);
+						number[i] = 1;
+						cnt++;
+						dfs(number,cnt, ans);
+						ans.pop();
+						cnt--;
+						number[i] = 0;
+					}
+				}
+			}
+			return;
+		}
+		else{
+			int temp = ans.top();
+			for(int i=0;i<10;i++){
+				if(number[i] == 0){
+					if(temp > i){
+						ans.push(i);
+						cnt++;
+						number[i] = 1;
+						dfs(number,cnt,ans);
+						ans.pop();
+						cnt--;
+						number[i] = 0;
+					}
+				}
+			}
+			return;
+		}
+	}
+}
+int main(void)
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cin >> N;
+	int number[10];
+	stack <int> ans;
+	for(int i=0;i<10;i++)
+		number[i] = 0;
+	for(int i=0;i<N;i++)
+		cin>>inequality[i];
+	for(int i=0;i<10;i++){
+		ans.push(i);
+		number[i] = 1;
+		dfs(number,0,ans);
+		number[i]=0;
+		ans.pop();
+	}
+	if(Max<pow(10,N))
+		cout<<"0"<<Max<<endl;
+	else
+		cout<<Max<<endl;
+	if(Min<pow(10,N))
+		cout<<"0"<<Min<<endl;
+	else
+		cout<<Min<<endl;
+}
