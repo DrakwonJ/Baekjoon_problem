@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <stack>
+#include <math.h>
+using namespace std;
+int X,Y;
+int arr[4][4];
+bool visited[4][4];
+int result=0;
+int sum(){
+	int all = 0;
+	int sum;
+	for(int row=0;row<Y;row++){
+		sum = 0;
+		for(int col= 0;col<X;col++){
+			if(visited[row][col] == true)
+				sum = (sum*10) + arr[row][col];
+			else{
+				all += sum;
+				sum = 0;
+			}
+		}
+		all += sum;
+	}
+	for(int col=0;col<X;col++){
+		sum = 0;
+		for(int row=0;row<Y;row++){
+			if(visited[row][col] == false)
+				sum = (sum*10) + arr[row][col];
+			else{
+				all += sum;
+				sum = 0;
+			}
+		}
+		all += sum;
+	}
+	return all;
+}
+void dfs(int y, int x){
+	if(y==Y){
+		result = max(result, sum());
+		return;
+	}
+	if(x==X){
+		dfs(y+1,0);
+		return;
+	}
+	visited[y][x] = true;
+	dfs(y,x+1);
+	visited[y][x] = false;
+	dfs(y,x+1);
+}
+int main(void)
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	cin>>Y>>X;
+	string s;
+	for(int i=0;i<Y;i++){
+		cin>>s;
+		for(int j=0;j<X;j++)
+			arr[i][j] = s[j]-'0';
+	}
+	dfs(0,0);
+	cout<<result<<endl;
+}
