@@ -1,0 +1,55 @@
+#include <iostream>
+#include <queue>
+#include <cstring>
+using namespace std;
+typedef struct{
+	int y, x;
+}dir;
+pair <int,int> start,des;
+int N;
+int len;
+int cache[300][300];
+bool visited[300][300];
+dir movedir[8] = {{-2,1},{-1,2},{1,2},{2,1},{2,-1},{1,-2},{-1,-2},{-2,-1}};
+void reset(void){
+	for(int i=0;i<300;i++){
+		for(int j=0;j<300;j++)
+			cache[i][j] = 987654321;
+	}
+}
+
+int chess(int y, int x){
+	reset();
+	queue<pair<int,int>>q;
+	q.push(make_pair(y,x));
+	cache[y][x] = 0;
+	while(!q.empty()){
+		pair<int,int> current = q.front();
+		q.pop();
+		if(current.first == des.first && current.second == des.second)
+			return cache[current.first][current.second];
+		for(int i=0;i<8;i++){
+			int nexty = current.first + movedir[i].y;
+			int nextx = current.second + movedir[i].x;
+			if(0<=nexty && nexty<len && 0<=nextx && nextx<len){
+				if(!visited[nexty][nextx]){
+					q.push(make_pair(nexty,nextx));
+					visited[nexty][nextx] = true;
+					cache[nexty][nextx] = min(cache[nexty][nextx], cache[current.first][current.second] + 1);
+				}
+			}
+		}
+	}
+}
+
+int main(void)
+{
+	cin>>N;
+	for(int i=0;i<N;i++){
+		memset(visited,false,sizeof(visited));
+		cin>>len;
+		cin>>start.first>>start.second;
+		cin>>des.first>>des.second;
+		cout<<chess(start.first,start.second)<<"\n";
+	}
+}
