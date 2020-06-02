@@ -1,0 +1,61 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int MAX = 10001;
+const int INF = 987654321;
+int N,nodeindex;
+int node[MAX];
+int low[MAX];
+int high[MAX];
+pair <int,int> tree[MAX];
+void DFS(int num, int cnt){
+	if(tree[num].first > 0)
+		DFS(tree[num].first, cnt+1);
+	
+	low[cnt] = min(low[cnt], nodeindex);
+	high[cnt] = max(high[cnt], nodeindex++);
+	
+	if(tree[num].second > 0)
+		DFS(tree[num].second, cnt+1);
+}
+
+int main(void)
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+	cin>>N;
+	for(int i=0;i<MAX;i++)
+		low[i] = INF;
+	for(int i=0;i<N;i++){
+		int root,left,right;
+		cin>>root>>left>>right;
+		node[root]++;
+		if(left != -1)
+			node[left]++;
+		tree[root].first = left;
+		if(right != -1)
+			node[right]++;
+		tree[root].second = right;
+	}
+	
+	int root;
+	for(int i=1; i<=N; i++){
+		if(node[i] == 1)
+			root = i;
+	}
+	
+	nodeindex = 1;
+	DFS(root,1);
+	
+	int result = high[1] = low[1] +1;
+	int level = 1;
+	for(int i=2; i<=N; i++){
+		int temp = high[i] - low[i] + 1;
+		if(temp > result){
+			result = temp;
+			level = i;
+		}
+	}
+	cout<<level<<" "<<result<<endl;
+}
