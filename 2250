@@ -28,15 +28,15 @@ int main(void)
 	for(int i=0;i<MAX;i++)
 		low[i] = INF;
 	for(int i=0;i<N;i++){
-		int root,left,right;
-		cin>>root>>left>>right;
-		node[root]++;
+		int parent,left,right;
+		cin>>parent>>left>>right;
+		node[parent]++;
 		if(left != -1)
 			node[left]++;
-		tree[root].first = left;
+		tree[parent].first = left;
 		if(right != -1)
 			node[right]++;
-		tree[root].second = right;
+		tree[parent].second = right;
 	}
 	
 	int root;
@@ -48,7 +48,7 @@ int main(void)
 	nodeindex = 1;
 	DFS(root,1);
 	
-	int result = high[1] = low[1] +1;
+	int result = high[1] - low[1] +1;
 	int level = 1;
 	for(int i=2; i<=N; i++){
 		int temp = high[i] - low[i] + 1;
